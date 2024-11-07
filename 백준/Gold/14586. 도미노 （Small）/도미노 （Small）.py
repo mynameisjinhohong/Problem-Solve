@@ -1,38 +1,60 @@
 import sys
-input = sys.stdin.readline
-INF = sys.maxsize
-def solution(n, arr):
-    sol_left = [i for i in range(n)]
-    sol_right = [i for i in range(n)]
-    for i in range(n):
-        left = arr[i][0] - arr[i][1]
-        right = arr[i][0] + arr[i][1]
-        for j in range(i, -1, -1):
-            if left <= arr[j][0]:
-                left = min(left, arr[j][0] - arr[j][1])
-                sol_left[i] = min(sol_left[i], j)
-        for j in range(i + 1, n):
-            if right >= arr[j][0]:
-                right = max(right, arr[j][0] + arr[j][1])
-                sol_right[i] = max(sol_right[i], j)
-    dp = [INF for i in range(n)]
-    dp[0] = 1
-    for i in range(n):
-        if sol_left[i] - 1 < 0:
-            dp[i] = min(dp[i], 1)
-        else:
-            dp[i] = min(dp[i], dp[sol_left[i] - 1] + 1)
-        for j in range(i):
-            if sol_right[j] >= i:
-                if j == 0:
-                    dp[i] = min(dp[i], 1)
-                else:
-                    dp[i] = min(dp[i], dp[j - 1] + 1)
-    return dp[n - 1]
-    
-    
-    
+
 n = int(input())
-arr = [tuple(map(int, input().split())) for _ in range(n)]
-arr.sort()
-print(solution(n, arr))
+domino = []
+for i in range(n):
+    domino.append(list(map(int,input().split())))
+domino.sort(key= lambda x :x[0])
+left = []
+right = []
+dp = []
+for i in range(n):
+    if i == 0:
+        left.append(0)
+        continue
+    end = domino[i][0] - domino[i][1]
+    idx = i
+    while True:
+        idx -= 1
+        if idx < 0:
+            left.append(0)
+            break
+        if domino[idx][0] >= end:
+            if domino[idx][0] - domino[idx][1] < end:
+                end = domino[idx][0] - domino[idx][1]
+        else:
+            left.append(idx + 1)
+            break
+for i in range(n-1,-1,-1):
+    if i == n-1:
+        right.append(n-1)
+        continue
+    end = domino[i][0]+ domino[i][1]
+    idx = i
+    while True:
+        idx += 1
+        if idx > n-1:
+            right.append(n-1)
+            break
+        if domino[idx][0] <= end:
+            if domino[idx][0] + domino[idx][1] > end:
+                end = domino[idx][0] + domino[idx][1]
+        else:
+            right.append(idx - 1)
+            break
+
+right.reverse()
+dp = [sys.maxsize for i in range(n)]
+dp[0] = 1
+for i in range(n):
+    if left[i] -1 < 0:
+        dp[i] = 1
+    else:
+        dp[i] = dp[left[i]-1] + 1
+    for j in range(i):
+        if right[j] >= i:
+            dp[i] = min(dp[i],dp[j-1]+1)
+        if j == 0 and right[j] >= i:
+            dp[i] = 1
+            break
+print(dp[n-1])
