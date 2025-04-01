@@ -12,20 +12,23 @@ using namespace std;
 
 int main()
 {
-	long long a, b;
+	unsigned long long a, b;
 	cin >> a >> b;
-	if (a == b)
+	if (a < b)
 	{
-		cout << 0 << endl;
+		cout << b - a - 1 << endl;
+	}
+	else if(a>b) {
+		cout << a-b -1 << endl;
 	}
 	else {
-		cout << abs(a - b) - 1 << endl;
+		cout << 0 << endl;
 	}
 	if (a > b)
 	{
 		swap(a, b);
 	}
-	for (int i = a+1; i <b; i++)
+	for (unsigned long long i = a+1; i <b; i++)
 	{
 		cout << i << " ";
 	}
