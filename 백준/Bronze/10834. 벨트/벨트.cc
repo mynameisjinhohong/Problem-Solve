@@ -17,11 +17,11 @@ int main()
 	cout.tie(NULL);
 	int n;
 	cin >> n;
-	int ans = 1;
+	long long ans = 1;
 	for (int i = 0; i < n; i++) {
-		float a,b,c;
+		long long a,b,c;
 		cin >> a >> b >> c;
-		ans = ans * (b / a);
+		ans = ans/ a * b;
 		if (c == 1) {
 			ans *= -1;
 		}
