@@ -15,10 +15,10 @@ int main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	float  a, b, c;
+	double  a, b, c;
 	cin >> a >> b >> c;
-	float ans = 100000;
-	if (b / a * 2 < c) {
+	double ans = 100000;
+	if (b / a * 2 <= c) {
 		if (ans > b / a * 2)
 			ans = b / a * 2;
 	}
@@ -26,7 +26,7 @@ int main()
 		if (ans > max(c,b/a))
 			ans = max(c, b / a);
 	}
-	if (c / a * 2 < b) {
+	if (c / a * 2 <= b) {
 		if (ans > c / a * 2)
 			ans = c / a * 2;
 	}
@@ -34,5 +34,5 @@ int main()
 		if (ans > max(c/a,b))
 			ans = max(c/a,b);
 	}
-	cout << ans << endl;
+	cout << fixed << setprecision(10) << ans << '\n';
 }
