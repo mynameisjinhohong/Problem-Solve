@@ -1,0 +1,1 @@
+print(int(''.join(list(reversed(list((str(bin(int(input()))[2:])))))),2))
