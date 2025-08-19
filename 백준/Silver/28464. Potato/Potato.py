@@ -1,0 +1,6 @@
+input()
+b = list(map(int,input().split()))
+b.sort()
+hap = sum(b)
+one = sum(b[len(b)//2:])
+print(hap-one,one)
